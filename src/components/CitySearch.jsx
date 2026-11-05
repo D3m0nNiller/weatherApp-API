@@ -22,6 +22,10 @@ export default function CitySearch() {
 
     return (
         <>
+            <h1>Hvordan er  vejret?</h1>
+
+            <p>Søg efter en by, og få det aktuelle vejr med det samme.</p>
+
             <form action="" onSubmit={handleSubmit}>
                 <input type="text" name="city" id="city_input" placeholder="Skriv en by, fx København" />
                 <button type="submit">Søg</button>
