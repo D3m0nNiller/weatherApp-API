@@ -23,7 +23,7 @@ export default function CitySearch() {
     return (
         <>
             <form action="" onSubmit={handleSubmit}>
-                <input type="text" name="city" id="city_input" placeholder="Søg efter en by her" />
+                <input type="text" name="city" id="city_input" placeholder="Skriv en by, fx København" />
                 <button type="submit">Søg</button>
             </form>
         </>
