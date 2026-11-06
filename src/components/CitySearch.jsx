@@ -61,9 +61,6 @@ export default function CitySearch({ setError, setWeather }) {
             const weatherResponse = await fetch(weatherURL)
             const weatherData = await weatherResponse.json()
             console.log(weatherData)
-            console.log(weatherURL);
-
-
 
             if (!response.ok) {
                 setError(true)
