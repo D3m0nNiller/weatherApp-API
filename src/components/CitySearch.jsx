@@ -1,4 +1,3 @@
-
 import { useEffect } from "react"
 
 export default function CitySearch({ setError, setWeather }) {
@@ -14,7 +13,6 @@ export default function CitySearch({ setError, setWeather }) {
                 url.searchParams.set("appid", API_key)
 
                 const response = await fetch(url)
-
 
                 if (!response.ok) {
                     setError(true)
@@ -41,34 +39,16 @@ export default function CitySearch({ setError, setWeather }) {
         try {
             const response = await fetch(url)
             const data = await response.json()
-            console.log(data);
 
-            const lat = data[0].lat
-            const lon = data[0].lon
-            const city = data[0].name
+            console.log(data)
 
-            console.log(lat)
-            console.log(lon)
-            console.log(city)
-
-            const weatherURL = new URL("https://api.openweathermap.org/data/2.5/weather")
-
-            weatherURL.searchParams.set("lat", lat)
-            weatherURL.searchParams.set("lon", lon)
-            weatherURL.searchParams.set("appid", API_key)
-            weatherURL.searchParams.set("units", "metric")
-
-            const weatherResponse = await fetch(weatherURL)
-            const weatherData = await weatherResponse.json()
-            console.log(weatherData)
-
-            if (!response.ok) {
+            if (!response.ok || data.length === 0) {
                 setError(true)
                 setWeather(null)
                 return
             }
 
-            setWeather(data)
+            setWeather(data[0])
             setError(false)
 
         } catch (error) {
