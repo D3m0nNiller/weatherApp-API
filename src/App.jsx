@@ -12,7 +12,7 @@ function App() {
       <Header />
       <main>
         {error ? (
-          <p>Vejrdata er i øjeblikket utilgængelige.</p>
+          <p>Der skete en fejl med at hente vejr data. Genindlæs siden eller prøv igen senere</p>
         ) : (
           <CitySearch setError={setError} setWeather={setWeather} />
         )}

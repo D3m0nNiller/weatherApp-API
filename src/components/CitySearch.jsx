@@ -43,6 +43,27 @@ export default function CitySearch({ setError, setWeather }) {
             const data = await response.json()
             console.log(data);
 
+            const lat = data[0].lat
+            const lon = data[0].lon
+            const city = data[0].name
+
+            console.log(lat)
+            console.log(lon)
+            console.log(city)
+
+            const weatherURL = new URL("https://api.openweathermap.org/data/2.5/weather")
+
+            weatherURL.searchParams.set("lat", lat)
+            weatherURL.searchParams.set("lon", lon)
+            weatherURL.searchParams.set("appid", API_key)
+            weatherURL.searchParams.set("units", "metric")
+
+            const weatherResponse = await fetch(weatherURL)
+            const weatherData = await weatherResponse.json()
+            console.log(weatherData)
+            console.log(weatherURL);
+
+
 
             if (!response.ok) {
                 setError(true)
