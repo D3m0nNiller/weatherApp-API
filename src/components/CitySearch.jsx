@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 export default function CitySearch({ setError, setLocation }) {
     const API_direct = import.meta.env.VITE_API_PATH
-    const API_key = import.meta.env.VITE_API_KEY
+    const API_key = import.meta.env.VITE_API_KEY //Insert own key here
 
     useEffect(() => {
         async function checkAPI() {
@@ -36,6 +36,10 @@ export default function CitySearch({ setError, setLocation }) {
         url.searchParams.set("q", city)
         url.searchParams.set("appid", API_key)
 
+        if (!city.trim()) {
+            return
+        }
+
         try {
             const response = await fetch(url)
             const data = await response.json()
@@ -55,6 +59,8 @@ export default function CitySearch({ setError, setLocation }) {
             setError(true)
             setLocation(null)
         }
+
+        event.target.reset()
     }
 
     return (

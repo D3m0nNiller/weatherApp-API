@@ -4,7 +4,7 @@ export default function WeatherDisplay({ lat, lon }) {
 
     const [weather, setWeather] = useState(null)
 
-    const API_key = import.meta.env.VITE_API_KEY
+    const API_key = import.meta.env.VITE_API_KEY //Insert own key here
 
     useEffect(() => {
         async function getWeather() {
@@ -42,8 +42,8 @@ export default function WeatherDisplay({ lat, lon }) {
 
                 <p>{weather.main.temp} &deg;C</p>
                 <p>{weather.weather[0].description}</p>
-                <p>Humidity: {weather.main.humidity}%</p>
-                <p>Wind: {weather.wind.speed} m/s</p>
+                <p>Fugtighed: {weather.main.humidity}%</p>
+                <p>Vind hastighed: {weather.wind.speed} m/s</p>
                 <p>Country: {country}</p>
             </section>
         </>
