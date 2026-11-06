@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function CitySearch({ setError, setWeather }) {
+export default function CitySearch({ setError, setLocation }) {
     const API_direct = import.meta.env.VITE_API_PATH
     const API_key = import.meta.env.VITE_API_KEY
 
@@ -44,16 +44,16 @@ export default function CitySearch({ setError, setWeather }) {
 
             if (!response.ok || data.length === 0) {
                 setError(true)
-                setWeather(null)
+                setLocation(null)
                 return
             }
 
-            setWeather(data[0])
+            setLocation(data[0])
             setError(false)
 
         } catch (error) {
             setError(true)
-            setWeather(null)
+            setLocation(null)
         }
     }
 

@@ -6,7 +6,7 @@ import WeatherDisplay from "./components/WeatherDisplay"
 function App() {
 
   const [error, setError] = useState(false)
-  const [weather, setWeather] = useState(null)
+  const [location, setLocation] = useState(null)
 
   return (
     <>
@@ -15,11 +15,11 @@ function App() {
         {error ? (
           <p>Der skete en fejl med at hente vejr data. Genindlæs siden eller prøv igen senere</p>
         ) : (
-          <CitySearch setError={setError} setWeather={setWeather} />
+          <CitySearch setError={setError} setLocation={setLocation} />
         )}
 
-        {weather && (
-          <WeatherDisplay lat={weather.lat} lon={weather.lon} />
+        {location && (
+          <WeatherDisplay lat={location.lat} lon={location.lon} />
         )}
       </main>
     </>
