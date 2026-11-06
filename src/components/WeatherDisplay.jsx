@@ -17,6 +17,7 @@ export default function WeatherDisplay({ lat, lon }) {
 
             const response = await fetch(url)
             const data = await response.json()
+            console.log(data);
 
             setWeather(data)
         }
@@ -28,6 +29,12 @@ export default function WeatherDisplay({ lat, lon }) {
         return <p>Loading weather...</p>
     }
 
+    const countryNames = new Intl.DisplayNames(["en"], {
+        type: "region"
+    })
+
+    const country = countryNames.of(weather.sys.country)
+
     return (
         <>
             <section>
@@ -37,6 +44,7 @@ export default function WeatherDisplay({ lat, lon }) {
                 <p>{weather.weather[0].description}</p>
                 <p>Humidity: {weather.main.humidity}%</p>
                 <p>Wind: {weather.wind.speed} m/s</p>
+                <p>Country: {country}</p>
             </section>
         </>
     )
