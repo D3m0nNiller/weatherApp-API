@@ -1,2 +1,4 @@
+##This ignores my .env file that contains information that shouldnt be given out
 .env
+##This is the node modules which are just very useless and not needed to get into the repository
 node_modules/
