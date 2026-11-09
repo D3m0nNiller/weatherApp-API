@@ -40,10 +40,10 @@ export default function WeatherDisplay({ lat, lon }) {
             <section>
                 <h2>{weather.name}</h2>
 
-                <p>{weather.main.temp} &deg;C</p>
+                <p>{weather.main.temp.toFixed(0)} &deg;C</p>
                 <p>{weather.weather[0].description}</p>
                 <p>Fugtighed: {weather.main.humidity}%</p>
-                <p>Vind hastighed: {weather.wind.speed} m/s</p>
+                <p>Vind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
                 <p>Land: {country}</p>
             </section>
         </>
