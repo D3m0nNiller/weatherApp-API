@@ -4,7 +4,7 @@ export default function WeatherDisplay({ lat, lon }) {
 
     const [weather, setWeather] = useState(null)
 
-    const API_key = import.meta.env.VITE_API_KEY //Insert own key here
+    const API_key = import.meta.env.VITE_API_KEY //Insert own key here from: "https://openweathermap.org"
 
     useEffect(() => {
         async function getWeather() {
@@ -29,7 +29,25 @@ export default function WeatherDisplay({ lat, lon }) {
         return <p>Loading weather...</p>
     }
 
-    const countryNames = new Intl.DisplayNames(["en"], {
+    function getWeatherIcon(description) {
+        if (description.includes("thunderstorm")) {
+            return "⛈️"
+        } else if (description.includes("rain")) {
+            return "🌧️"
+        } else if (description.includes("snow")) {
+            return "❄️"
+        } else if (description.includes("cloud")) {
+            return "☁️"
+        } else if (description.includes("clear")) {
+            return "☀️"
+        } else if (description.includes("mist") || description.includes("fog")) {
+            return "🌫️"
+        } else {
+            return "🌤️"
+        }
+    }
+
+    const countryNames = new Intl.DisplayNames(["da"], {
         type: "region"
     })
 
@@ -38,18 +56,29 @@ export default function WeatherDisplay({ lat, lon }) {
     return (
         <>
             <section id="weather_details">
-                <h2>{weather.name}</h2>
-
-                <p>Tempature: {weather.main.temp.toFixed(0)} &deg;C</p>
-                <p>Feels like {weather.main.feels_like.toFixed(0)} &deg;C</p>
-                <div>
-                    <p>Max tempature: {weather.main.temp_max.toFixed(0)} &deg;C</p>
-                    <p>Min tempature: {weather.main.temp_min.toFixed(0)} &deg;C</p>
+                <div id="found_search">
+                    <h2>{weather.name}</h2>
+                    <h2>Land: {country}</h2>
                 </div>
-                <p>{weather.weather[0].description}</p>
-                <p>Humidity: {weather.main.humidity}%</p>
-                <p>Wind speed: {weather.wind.speed.toFixed(1)} m/s</p>
-                <p>Land: {country}</p>
+
+                <div id="tempature">
+                    <p>temperatur: {weather.main.temp.toFixed(0)} &deg;C</p>
+                    <p>føles som: {weather.main.feels_like.toFixed(0)} &deg;C</p>
+
+                    <p>Max temperatur: {weather.main.temp_max.toFixed(0)} &deg;C</p>
+                    <p>Min temperatur: {weather.main.temp_min.toFixed(0)} &deg;C</p>
+                </div>
+
+                <div id="weather_information">
+                    <p id="city_weather">{weather.weather[0].description}</p>
+                    <p>{getWeatherIcon(weather.weather[0].description)}</p>
+                </div>
+
+                <div id="extra_information">
+                    <p>fygtighed: {weather.main.humidity}%</p>
+                    <p>wind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
+                </div>
+
             </section>
         </>
     )

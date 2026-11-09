@@ -1,8 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function CitySearch({ setError, setLocation }) {
     const API_direct = import.meta.env.VITE_API_PATH
-    const API_key = import.meta.env.VITE_API_KEY //Insert own key here
+    const API_key = import.meta.env.VITE_API_KEY //Insert own key here from: "https://openweathermap.org"
+
+    const [locations, setLocations] = useState([])
 
     useEffect(() => {
         async function checkAPI() {
@@ -34,6 +36,7 @@ export default function CitySearch({ setError, setLocation }) {
         const url = new URL(API_direct)
 
         url.searchParams.set("q", city)
+        url.searchParams.set("limit", "5")
         url.searchParams.set("appid", API_key)
 
         if (!city.trim()) {
@@ -52,7 +55,7 @@ export default function CitySearch({ setError, setLocation }) {
                 return
             }
 
-            setLocation(data[0])
+            setLocations(data)
             setError(false)
 
         } catch (error) {
@@ -79,6 +82,17 @@ export default function CitySearch({ setError, setLocation }) {
 
                 <button type="submit">Søg</button>
             </form>
+
+            {locations.map((location) => (
+                <button
+                    key={`${location.lat}-${location.lon}`}
+                    onClick={() => setLocation(location)}
+                >
+                    {location.name}
+                    {location.state && `, ${location.state}`}
+                    {`, ${location.country}`}
+                </button>
+            ))}
         </>
     )
 }
