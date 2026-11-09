@@ -3,7 +3,7 @@ export default function Header() {
     return (
         <>
             <header>
-                <div>
+                <div id="weather_box">
                     <i className="fa-solid fa-cloud-sun weather_icon"></i>
                     <div>
                         <h3>Vejrblik</h3>
