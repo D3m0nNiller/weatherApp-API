@@ -1,32 +1,41 @@
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 
 export default function WeatherDisplay({ lat, lon }) {
 
-    const [weather, setWeather] = useState(null)
-
     const API_key = import.meta.env.VITE_API_KEY //Insert own key here from: "https://openweathermap.org"
 
-    useEffect(() => {
-        async function getWeather() {
+    const { data: weather, isPending, error } = useQuery({
+        queryKey: ["weather", lat, lon],
+
+        queryFn: async () => {
             const url = new URL("https://api.openweathermap.org/data/2.5/weather")
 
             url.searchParams.set("lat", lat)
             url.searchParams.set("lon", lon)
             url.searchParams.set("appid", API_key)
             url.searchParams.set("units", "metric")
+            url.searchParams.set("lang", "da")
 
             const response = await fetch(url)
+
+            if (!response.ok) {
+                throw new Error("Could not fetch weather data")
+            }
+
             const data = await response.json()
-            console.log(data);
 
-            setWeather(data)
-        }
+            return data
+        },
+        staleTime: 1000 * 60 * 5
 
-        getWeather()
-    }, [lat, lon])
+    })
 
-    if (!weather) {
+    if (isPending) {
         return <p>Loading weather...</p>
+    }
+
+    if (error) {
+        return <p>{error.message}</p>
     }
 
     function getWeatherIcon(description) {
@@ -74,12 +83,12 @@ export default function WeatherDisplay({ lat, lon }) {
                     <p>{getWeatherIcon(weather.weather[0].description)}</p>
                 </div>
 
-                <div id="extra_information">
-                    <p>fygtighed: {weather.main.humidity}%</p>
-                    <p>wind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
-                </div>
-
             </section>
+
+            <div id="extra_information">
+                <p>fygtighed: {weather.main.humidity}%</p>
+                <p>wind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
+            </div>
         </>
     )
 }

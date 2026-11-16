@@ -83,16 +83,19 @@ export default function CitySearch({ setError, setLocation }) {
                 <button type="submit">Søg</button>
             </form>
 
-            {locations.map((location) => (
-                <button
-                    key={`${location.lat}-${location.lon}`}
-                    onClick={() => setLocation(location)}
-                >
-                    {location.name}
-                    {location.state && `, ${location.state}`}
-                    {`, ${location.country}`}
-                </button>
-            ))}
+            <div id="all_city_buttons">
+                {locations.map((location) => (
+                    <button
+                        key={`${location.lat}-${location.lon}`}
+                        onClick={() => setLocation(location)}
+                        className="city_button"
+                    >
+                        {location.name}
+                        {location.state && `, ${location.state}`}
+                        {`, ${location.country}`}
+                    </button>
+                ))}
+            </div>
         </>
     )
 }

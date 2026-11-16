@@ -57,6 +57,9 @@ form button[type="submit"] {
     background-color: #0D00FF;
     border-radius: 1em;
     padding: 1em;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
 }
 
 #weather_details h2 {
@@ -78,6 +81,7 @@ form button[type="submit"] {
 #found_search {
     display: flex;
     justify-content: space-between;
+    grid-column: 1/-1;
 }
 
 #tempature {
@@ -85,6 +89,8 @@ form button[type="submit"] {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     width: 40%;
+    grid-column: 1/5;
+    place-self: center;
 }
 
 #tempature p {
@@ -92,7 +98,24 @@ form button[type="submit"] {
 }
 
 #weather_information {
-    float: right;
+    grid-column: -2/-1;
     display: flex;
     font-size: 2em;
+}
+
+button {
+    background-color: #0D00FF;
+    color: #FFB700;
+    border: none;
+    border-radius: 1em;
+    padding: 0.6em;
+}
+
+.city_button {
+    margin-bottom: 20px;
+}
+
+#all_city_buttons {
+    display: flex;
+    justify-content: space-between
 }
