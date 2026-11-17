@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-
+import "./transition.scss"
+import { useRef, useEffect } from "react"
 export default function WeatherDisplay({ lat, lon, setLocation }) {
 
     const API_key = import.meta.env.VITE_API_KEY //Insert own key here from: "https://openweathermap.org"
@@ -29,6 +30,19 @@ export default function WeatherDisplay({ lat, lon, setLocation }) {
         staleTime: 1000 * 60 * 5
 
     })
+
+    const contentRef = useRef(null)
+    const extraRef = useRef(null)
+
+    useEffect(() => {
+        if (!isPending && !error && weather) {
+            const details = contentRef.current
+            const extra = extraRef.current
+
+            details.style.height = `${details.scrollHeight}px`
+            extra.style.height = `${extra.scrollHeight}px`
+        }
+    }, [isPending, error, weather])
 
     if (isPending) {
         return <p>Loading weather...</p>
@@ -72,31 +86,33 @@ export default function WeatherDisplay({ lat, lon, setLocation }) {
 
     return (
         <>
-            <section id="weather_details">
-                <div id="found_search">
-                    <h2>{weather.name}</h2>
-                    <h2>Land: {country}</h2>
+            <section id="weather">
+                <section id="weather_details" ref={contentRef}>
+                    <div id="found_search">
+                        <h2>{weather.name}</h2>
+                        <h2>Land: {country}</h2>
+                    </div>
+
+                    <div id="tempature">
+                        <p>temperatur: {weather.main.temp.toFixed(0)} &deg;C</p>
+                        <p>føles som: {weather.main.feels_like.toFixed(0)} &deg;C</p>
+
+                        <p>Max temperatur: {weather.main.temp_max.toFixed(0)} &deg;C</p>
+                        <p>Min temperatur: {weather.main.temp_min.toFixed(0)} &deg;C</p>
+                    </div>
+
+                    <div id="weather_information">
+                        <p id="city_weather">{weather.weather[0].description}</p>
+                        <p>{getWeatherIcon(weather.weather[0].description)}</p>
+                    </div>
+
+                </section>
+
+                <div id="extra_information" ref={extraRef}>
+                    <p>fygtighed: {weather.main.humidity}%</p>
+                    <p>wind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
                 </div>
-
-                <div id="tempature">
-                    <p>temperatur: {weather.main.temp.toFixed(0)} &deg;C</p>
-                    <p>føles som: {weather.main.feels_like.toFixed(0)} &deg;C</p>
-
-                    <p>Max temperatur: {weather.main.temp_max.toFixed(0)} &deg;C</p>
-                    <p>Min temperatur: {weather.main.temp_min.toFixed(0)} &deg;C</p>
-                </div>
-
-                <div id="weather_information">
-                    <p id="city_weather">{weather.weather[0].description}</p>
-                    <p>{getWeatherIcon(weather.weather[0].description)}</p>
-                </div>
-
             </section>
-
-            <div id="extra_information">
-                <p>fygtighed: {weather.main.humidity}%</p>
-                <p>wind hastighed: {weather.wind.speed.toFixed(1)} m/s</p>
-            </div>
         </>
     )
 }
