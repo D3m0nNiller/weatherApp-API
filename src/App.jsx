@@ -20,14 +20,18 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Header />
         <main>
-          {error ? (
+          {error && !location ? (
             <p>Der skete en fejl med at hente vejr data. Genindlæs siden eller prøv igen senere</p>
           ) : (
             <CitySearch setError={setError} setLocation={setLocation} />
           )}
 
           {location && (
-            <WeatherDisplay lat={location.lat} lon={location.lon} />
+            <WeatherDisplay
+              lat={location.lat}
+              lon={location.lon}
+              setLocation={setLocation}
+            />
           )}
         </main>
         <ReactQueryDevtools initialIsOpen={false} />

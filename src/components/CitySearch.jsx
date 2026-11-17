@@ -38,6 +38,7 @@ export default function CitySearch({ setError, setLocation }) {
         url.searchParams.set("q", city)
         url.searchParams.set("limit", "5")
         url.searchParams.set("appid", API_key)
+        url.searchParams.set("lang", "da")
 
         if (!city.trim()) {
             return

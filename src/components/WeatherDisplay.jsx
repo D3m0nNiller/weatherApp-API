@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 
-export default function WeatherDisplay({ lat, lon }) {
+export default function WeatherDisplay({ lat, lon, setLocation }) {
 
     const API_key = import.meta.env.VITE_API_KEY //Insert own key here from: "https://openweathermap.org"
 
@@ -35,21 +35,29 @@ export default function WeatherDisplay({ lat, lon }) {
     }
 
     if (error) {
-        return <p>{error.message}</p>
+        return (
+            <div>
+                <p>Kunne ikke hente vejrdata. Prøv igen.</p>
+
+                <button onClick={() => setLocation(null)}>
+                    Tilbage til søgning
+                </button>
+            </div>
+        )
     }
 
     function getWeatherIcon(description) {
-        if (description.includes("thunderstorm")) {
+        if (description.includes("torden")) {
             return "⛈️"
-        } else if (description.includes("rain")) {
+        } else if (description.includes("regn")) {
             return "🌧️"
-        } else if (description.includes("snow")) {
+        } else if (description.includes("sne")) {
             return "❄️"
-        } else if (description.includes("cloud")) {
+        } else if (description.includes("skyer")) {
             return "☁️"
-        } else if (description.includes("clear")) {
+        } else if (description.includes("klar")) {
             return "☀️"
-        } else if (description.includes("mist") || description.includes("fog")) {
+        } else if (description.includes("tåge") || description.includes("dis")) {
             return "🌫️"
         } else {
             return "🌤️"
